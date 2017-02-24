@@ -86,6 +86,7 @@ GEM
     nio4r (1.2.1)
     nokogiri (1.7.0.1)
       mini_portile2 (~> 2.1.0)
+    opensearch (0.0.1)
     parser (2.4.0.0)
       ast (~> 2.2)
     powerpack (0.1.1)
@@ -203,6 +204,7 @@ DEPENDENCIES
   dotenv-rails
   haml
   listen (~> 3.0.5)
+  opensearch
   rails (~> 5.0.1)
   rails-controller-testing
   rspec-rails
