@@ -1,24 +1,24 @@
-# README
+# Search Prototype
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Search Prototype is a very simple [Rails 5](http://rubyonrails.org/) application designed to search [parliament.uk](http://parliament.uk) using an OpenSearch API.
 
-Things you may want to cover:
+## Requirements
+Search Prototype requires the following:
+* [Ruby 2.3.1](https://www.ruby-lang.org/en/)
 
-* Ruby version
+## Getting Started
+Setup the main application repository:
+```bash
+git clone https://github.com/ukparliament/search-prototype.git
+cd search-prototype
+bundle install
+```
 
-* System dependencies
+### Running the application
+```
+bundle exec rails s
+```
+The application should now be viewable in your local browser at: http://localhost:3000.
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Searching
+Enter a term in the search box and press 'Search'.

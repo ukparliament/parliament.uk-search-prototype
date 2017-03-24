@@ -8,7 +8,6 @@ class SearchController < ApplicationController
     query_parameter = params[:q]
 
     engine = OpenSearch::OpenSearch.new('http://parliament-search-api.azurewebsites.net/description')
-
     response = engine.search(query_parameter)
 
     @response = JSON.parse(response)
