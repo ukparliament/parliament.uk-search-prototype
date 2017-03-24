@@ -29,10 +29,10 @@ class SearchController < ApplicationController
 
     engine = OpenSearch::OpenSearch.new('http://parliament-search-api.azurewebsites.net/description')
 
-    @response = engine.search(query_parameter, 'application/atom+xml')
+    response = engine.search(query_parameter)
 
-    # Currently not working - I think the cause of this could be: <Url template="http://localhost/search?q={searchTerms}&amp;start={startPage?}" type="application/atom+xml" />
-    # in the description file.  It should not say localhost, because then it tries to search this incorrectly.
+    @response = JSON.parse(response)
+    @results = @response['Items']
 
     render 'results'
   end

@@ -1,12 +1,10 @@
 = render partial: 'search/search_box'
 
-%p= @response
+%p= "#{@response['TotalResults']} results"
 
--#%p= "#{@response['TotalResults']} results"
--#
--#%ul
--#  - @results.each do |result|
--#    %li
--#      %p= link_to(result['Title']['Text'].html_safe, result['Links'][0]['Uri'])
--#      %p= result['Summary']['Text'].html_safe
+%ul
+  - @results.each do |result|
+    %li
+      %p= link_to(result['Title']['Text'].html_safe, result['Links'][0]['Uri'])
+      %p= result['Summary']['Text'].html_safe
 
