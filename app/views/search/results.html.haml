@@ -1,6 +1,6 @@
 = render partial: 'search/search_box'
 
-%p= "About #{@response['TotalResults']} results for #{@query_parameter}"
+%p= "About #{@response['TotalResults']} results"
 
 %ul
   - @results.each do |result|

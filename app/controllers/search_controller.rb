@@ -2,7 +2,9 @@ require 'net/http'
 require 'opensearch'
 
 class SearchController < ApplicationController
-  def index; end
+  def index
+    @query_parameter = nil
+  end
 
   def search
     @query_parameter = params[:q]
