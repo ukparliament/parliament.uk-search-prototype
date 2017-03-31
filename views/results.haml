@@ -1,0 +1,10 @@
+= haml :search_box
+
+%p= "About #{@response['TotalResults']} results"
+
+%ul.list
+  - @results.each do |result|
+    %li.list__item
+      %p= link_to(result['Title']['Text'].html_safe, result['Links'][0]['Uri'])
+      %p= result['Links'][0]['Uri']
+      %p= result['Summary']['Text'].html_safe
