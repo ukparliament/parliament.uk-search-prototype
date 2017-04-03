@@ -1,7 +1,8 @@
 require 'sinatra/base'
 require 'net/http'
-require 'opensearch'
 require 'json'
+
+require_relative 'lib/opensearch.rb'
 
 class Search < Sinatra::Base
   get '/' do

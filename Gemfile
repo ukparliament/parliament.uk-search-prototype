@@ -5,9 +5,6 @@ gem 'sinatra'
 # View templating
 gem 'haml'
 
-# Opensearch gem to process results from api
-gem 'opensearch'
-
 gem 'json'
 
 group :development, :test do

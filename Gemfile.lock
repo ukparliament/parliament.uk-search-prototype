@@ -25,7 +25,6 @@ GEM
     mini_portile2 (2.1.0)
     nokogiri (1.7.1)
       mini_portile2 (~> 2.1.0)
-    opensearch (0.0.1)
     parser (2.4.0.0)
       ast (~> 2.2)
     powerpack (0.1.1)
@@ -79,7 +78,6 @@ DEPENDENCIES
   capybara
   haml
   json
-  opensearch
   rspec
   rubocop
   simplecov
