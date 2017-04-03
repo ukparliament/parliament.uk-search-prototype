@@ -78,6 +78,7 @@ PLATFORMS
 DEPENDENCIES
   capybara
   haml
+  json
   opensearch
   rspec
   rubocop

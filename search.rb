@@ -15,15 +15,17 @@ class Search < Sinatra::Base
 
     engine = OpenSearch::OpenSearch.new('http://parliament-search-api.azurewebsites.net/description')
 
-      response = engine.search(@query_parameter)
-      @response = JSON.parse(response)
-      @results = @response['Items']
+    begin
+      search_response = engine.search(@query_parameter)
+
+      @search_response = JSON.parse(search_response)
+      @results = @search_response['Items']
 
       haml :results
-
+    rescue
+      haml :no_results
+    end
    end
-
-  # set :views, Proc.new { File.join(root, '..', 'views') }
 
   run! if app_file == $0
 end

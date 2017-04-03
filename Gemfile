@@ -8,6 +8,8 @@ gem 'haml'
 # Opensearch gem to process results from api
 gem 'opensearch'
 
+gem 'json'
+
 group :development, :test do
   # Use Rubocop for static code quality analysis
   gem 'rubocop'
