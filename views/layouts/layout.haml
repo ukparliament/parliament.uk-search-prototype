@@ -1,0 +1,11 @@
+!!!
+%html
+  %head
+    %title Search
+    %link{:href => "https://s3-eu-west-1.amazonaws.com/web1devci.pugin-website/1.2.6/stylesheets/main.css", :rel => "stylesheet"}/
+  %body
+    = haml :'components/header'
+    %main
+      .container--full-grid
+        .row--indent-full
+          = yield

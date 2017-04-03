@@ -7,7 +7,7 @@ class Search < Sinatra::Base
   get '/' do
     @query_parameter = nil
 
-    haml :index
+    haml :'search/index', layout: :'layouts/layout'
   end
 
   get '/search' do
@@ -21,9 +21,9 @@ class Search < Sinatra::Base
       @search_response = JSON.parse(search_response)
       @results = @search_response['Items']
 
-      haml :results
+      haml :'search/results', layout: :'layouts/layout'
     rescue
-      haml :no_results
+      haml :'search/no_results', layout: :'layouts/layout'
     end
    end
 
