@@ -1,11 +1,9 @@
 source 'https://rubygems.org'
 
-gem 'sinatra'
-
-# View templating
+gem 'activesupport'
 gem 'haml'
-
 gem 'json'
+gem 'sinatra'
 
 group :development, :test do
   # Use Rubocop for static code quality analysis
@@ -16,6 +14,6 @@ group :test do
   gem 'capybara'
   gem 'rspec'
   gem 'simplecov', require: false
-  gem 'webmock'
   gem 'vcr'
+  gem 'webmock'
 end
