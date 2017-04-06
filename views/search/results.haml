@@ -1,10 +1,10 @@
 = haml :'search/search_box'
 
-%p= "About #{@search_response['TotalResults']} results"
+%p= "About #{@results.totalResults} results"
 
 %ul.list
-  - @results.each do |result|
+  - @results.entries.each do |entry|
     %li.list__item
-      %a{ :href => "#{result['Links'][0]['Uri']}" }= result['Title']['Text']
-      %p= result['Links'][0]['Uri']
-      %p= result['Summary']['Text']
+      %a{ :href => "#{entry.url}" }= entry.title
+      %p= entry.url
+      %p= entry.summary

@@ -1,7 +1,6 @@
 require 'sinatra'
 require 'json'
-
-require_relative 'lib/opensearch.rb'
+require 'parliament'
 
 class Search < Sinatra::Application
   get '/' do
@@ -11,18 +10,19 @@ class Search < Sinatra::Application
   end
 
   get '/search' do
+    Parliament::Request::OpenSearchRequest.base_url = 'http://parliament-search-api.azurewebsites.net/description' # set as env var?
     @query_parameter = params[:q]
+    #@start_page = params[:start_page] || Parliament::Request::OpenSearchRequest.OPEN_SEARCH_PARAMETERS[:start_page]
 
-    engine = OpenSearch::OpenSearch.new('http://parliament-search-api.azurewebsites.net/description')
-    search_response = engine.search(@query_parameter)
-    @search_response = JSON.parse(search_response)
 
-    if @search_response['Message'] == 'An error has occurred.'
-      haml :'search/no_results', layout: :'layouts/layout'
-    else
-      @results = @search_response['Items']
+    request = Parliament::Request::OpenSearchRequest.new(headers: { 'Accept' => 'application/atom+xml' },
+                                                         builder: Parliament::Builder::OpenSearchResponseBuilder)
 
+    begin
+      @results = request.get({ query: @query_parameter, start: @start_page })
       haml :'search/results', layout: :'layouts/layout'
+    rescue Parliament::ServerError
+      haml :'search/no_results', layout: :'layouts/layout'
     end
   end
 
