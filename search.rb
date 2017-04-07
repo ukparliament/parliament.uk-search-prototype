@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'parliament'
+# require 'pugin'
 require './helpers/pagination'
 
 class Search < Sinatra::Application

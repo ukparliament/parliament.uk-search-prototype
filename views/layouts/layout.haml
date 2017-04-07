@@ -1,11 +1,24 @@
-!!!
-%html
+!!! 5
+%html{lang:'en'}
   %head
-    %title Search
-    %link{:href => "https://s3-eu-west-1.amazonaws.com/web1devci.pugin-website/1.2.6/stylesheets/main.css", :rel => "stylesheet"}/
-  %body
-    = haml :'components/header'
-    %main
+    %title Search Prototype
+    %link{rel: 'stylesheet', href: "#{ENV.fetch('ASSET_LOCATION_URL', 'https://s3-eu-west-1.amazonaws.com/web1devci.pugin-website')}/1.2.7/stylesheets/main.css" }
+    %meta{name: 'viewport', content: 'width=device-width, initial-scale=1.0'}
+    %meta{'http-equiv': 'X-UA-Compatible', content: 'IE=edge'}
+  %body.no-js
+    %a.sr-only.sr-only--focusable{href: '#content', id: 'skiplink'} Skip to main content
+    %header
       .container--full-grid
-        .row--indent-full
-          = yield
+        %a.logo{href: '/'} UK Parliament
+    %main#content
+      .container--full-grid
+        = yield
+    %footer
+      .container--full-grid
+        %h2.logo UK Parliament
+        %ul.list
+          %li
+            %a{href: 'https://www.parliament.uk/'} Current website
+          %li
+            %a{href: 'http://beta.parliament.uk/meta/cookie-policy'} Cookie policy
+    %script{src: "#{ENV.fetch('ASSET_LOCATION_URL', 'https://s3-eu-west-1.amazonaws.com/web1devci.pugin-website')}/1.2.7/javascripts/main.js"}
