@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'haml'
 
-gem 'parliament-opensearch', git: 'https://github.com/ukparliament/parliament-opensearch', branch: 'master'
+gem 'parliament-opensearch'
 gem 'sinatra', '~> 1.4.8'
 
 group :development, :test do
