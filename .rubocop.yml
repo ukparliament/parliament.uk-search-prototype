@@ -51,3 +51,8 @@ Style/SpaceAroundOperators:
 
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+AllCops:
+  Exclude:
+    - 'Gemfile'
+    - 'spec/**/*'
