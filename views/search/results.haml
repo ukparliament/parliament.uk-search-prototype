@@ -1,6 +1,6 @@
 = haml :'search/search_box'
 
-%p= "About #{@results.totalResults} results"
+%p= "About #{@results_total} results"
 
 %ul.list
   - @results.entries.each do |entry|
@@ -8,3 +8,16 @@
       %a{ :href => "#{entry.url}" }= entry.title
       %p= entry.url
       %p= entry.summary
+
+%ul
+  - unless current_page == 1
+    %li
+      %a{ :href => "/search?q=#{@query_parameter}&start_page=#{start_page(previous_page)}" } Previous
+
+  - page_range.each do |page|
+    %li
+      %a{ :href => "/search?q=#{@query_parameter}&start_page=#{start_page(page)}" }= page
+
+  - unless current_page == last_page
+    %li
+      %a{ :href => "/search?q=#{@query_parameter}&start_page=#{start_page(next_page)}" } Next

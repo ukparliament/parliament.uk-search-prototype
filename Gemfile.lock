@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/katylouise/parliament-ruby
-  revision: d346b1368fd51ae34cdc550899418e19ac1128e4
+  revision: 324649a615f81c739e11572a01ce0b1503653f8b
   branch: katylouise/website-899_refactor-request
   specs:
     parliament-ruby (0.6.3)

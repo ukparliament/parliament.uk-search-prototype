@@ -1,6 +1,6 @@
 require 'sinatra'
-require 'json'
 require 'parliament'
+require './helpers/pagination'
 
 class Search < Sinatra::Application
   get '/' do
@@ -11,15 +11,19 @@ class Search < Sinatra::Application
 
   get '/search' do
     Parliament::Request::OpenSearchRequest.base_url = 'http://parliament-search-api.azurewebsites.net/description' # set as env var?
-    @query_parameter = params[:q]
-    #@start_page = params[:start_page] || Parliament::Request::OpenSearchRequest.OPEN_SEARCH_PARAMETERS[:start_page]
 
+    @query_parameter = params[:q]
+    @start_page = params[:start_page] || Parliament::Request::OpenSearchRequest.open_search_parameters[:start_page]
+    @start_page = @start_page.to_i
+    @count = Parliament::Request::OpenSearchRequest.open_search_parameters[:count]
 
     request = Parliament::Request::OpenSearchRequest.new(headers: { 'Accept' => 'application/atom+xml' },
                                                          builder: Parliament::Builder::OpenSearchResponseBuilder)
 
     begin
-      @results = request.get({ query: @query_parameter, start: @start_page })
+      @results = request.get({ query: @query_parameter, start_page: @start_page })
+      @results_total = @results.totalResults
+
       haml :'search/results', layout: :'layouts/layout'
     rescue Parliament::ServerError
       haml :'search/no_results', layout: :'layouts/layout'

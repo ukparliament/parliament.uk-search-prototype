@@ -5,6 +5,7 @@ require 'rack/test'
 require 'webmock/rspec'
 require 'vcr'
 require File.join(File.dirname(__FILE__), '..', 'search.rb')
+require File.join(File.dirname(__FILE__), '..', 'helpers/pagination.rb')
 
 def app
   Search.new
@@ -95,10 +96,10 @@ RSpec.configure do |config|
   #   - http://www.teaisaweso.me/blog/2013/05/27/rspecs-new-message-expectation-syntax/
   #   - http://rspec.info/blog/2014/05/notable-changes-in-rspec-3/#zero-monkey-patching-mode
   config.disable_monkey_patching!
-
-  # This setting enables warnings. It's recommended, but in some cases may
-  # be too noisy due to issues in dependencies.
-  config.warnings = true
+  #
+  # # This setting enables warnings. It's recommended, but in some cases may
+  # # be too noisy due to issues in dependencies.
+  # config.warnings = true
 
   # Many RSpec users commonly either run the entire suite or an individual
   # file, and it's useful to allow more verbose output when running an
