@@ -26,7 +26,7 @@ RSpec.describe Search, vcr: true do
       end
 
       it 'should return the number of results' do
-        expect(last_response.body).to include('About 18300 results')
+        expect(last_response.body).to include('About 19100 results')
       end
 
       it 'should return title, link and summary for each entry' do
