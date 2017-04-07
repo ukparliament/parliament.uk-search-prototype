@@ -11,8 +11,6 @@ class Search < Sinatra::Application
   end
 
   get '/search' do
-    Parliament::Request::OpenSearchRequest.base_url = 'http://parliament-search-api.azurewebsites.net/description'
-
     @query_parameter = params[:q]
     @start_page = params[:start_page] || Parliament::Request::OpenSearchRequest.open_search_parameters[:start_page]
     @start_page = @start_page.to_i

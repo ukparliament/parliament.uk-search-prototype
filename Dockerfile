@@ -50,4 +50,4 @@ LABEL git-sha=$GIT_SHA \
 	    maintainer=mattrayner1@gmail.com
 
 # Launch puma
-CMD ["bundle", "exec", "puma"]
+CMD ["bundle", "exec", "puma", "-b", "tcp://0.0.0.0:3000"]
