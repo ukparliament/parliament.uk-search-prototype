@@ -1,7 +1,8 @@
 source 'https://rubygems.org'
 
 gem 'haml'
-gem 'parliament-ruby', git: 'https://github.com/katylouise/parliament-ruby', branch: 'katylouise/website-899_refactor-request'
+
+gem 'parliament-opensearch', git: 'https://github.com/ukparliament/parliament-opensearch', branch: 'master'
 gem 'sinatra', '~> 1.4.8'
 
 group :development, :test do

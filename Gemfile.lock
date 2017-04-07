@@ -1,11 +1,11 @@
 GIT
-  remote: https://github.com/katylouise/parliament-ruby
-  revision: 324649a615f81c739e11572a01ce0b1503653f8b
-  branch: katylouise/website-899_refactor-request
+  remote: https://github.com/ukparliament/parliament-opensearch
+  revision: d4da0cba0cb4b128442f41393bc7078e09ac528b
+  branch: master
   specs:
-    parliament-ruby (0.6.3)
+    parliament-opensearch (0.1.0)
       feedjira (~> 2.1.2)
-      grom (~> 0.3.6)
+      parliament-ruby (~> 0.7.2.pre)
 
 GEM
   remote: https://rubygems.org/
@@ -60,6 +60,9 @@ GEM
     multipart-post (2.0.0)
     nokogiri (1.7.1)
       mini_portile2 (~> 2.1.0)
+    parliament-ruby (0.7.2.pre)
+      feedjira (~> 2.1.2)
+      grom (~> 0.3.6)
     parser (2.4.0.0)
       ast (~> 2.2)
     powerpack (0.1.1)
@@ -125,7 +128,7 @@ PLATFORMS
 DEPENDENCIES
   capybara
   haml
-  parliament-ruby!
+  parliament-opensearch!
   rack-vcr
   rspec
   rubocop
