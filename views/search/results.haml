@@ -6,7 +6,7 @@
   - @results.entries.each do |entry|
     %li.list__item
       %a{ :href => "#{entry.url}" }= entry.title
-      %p= entry.url
+      %p{ style: 'word-wrap: break-word;' }= entry.url
       %p= entry.summary
 
 %ul
