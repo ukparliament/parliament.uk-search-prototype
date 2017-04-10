@@ -2,8 +2,19 @@ require 'simplecov'
 SimpleCov.start
 
 require 'rack/test'
+require 'webmock'
 require 'webmock/rspec'
 require 'vcr'
+
+# Setup the initial description file request
+WebMock.stub_request(:get, "http://parliament-search-api.azurewebsites.net/description").
+  with(:headers => {'Accept'=>['*/*', 'application/opensearchdescription+xml'], 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).
+  to_return(:status => 200, :body => "<?xml version=\"1.0\"?>\r\n<OpenSearchDescription xmlns=\"http://a9.com/-/spec/opensearch/1.1/\">\r\n
+  \ <ShortName>os test</ShortName>\r\n  <Description>test for os</Description>\r\n
+  \ <Url template=\"http://parliament-search-api.azurewebsites.net/search?q={searchTerms}&amp;start={startPage?}\"
+        type=\"application/atom+xml\" />\r\n</OpenSearchDescription>", :headers => {})
+
+
 require File.join(File.dirname(__FILE__), '..', 'search.rb')
 require File.join(File.dirname(__FILE__), '..', 'helpers/pagination.rb')
 
@@ -127,5 +138,4 @@ RSpec.configure do |config|
   # test failures related to randomization by passing the same `--seed` value
   # as the one that triggered the failure.
   Kernel.srand config.seed
-
 end

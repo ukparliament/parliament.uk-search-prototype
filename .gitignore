@@ -2,3 +2,4 @@
 /coverage
 */.idea/*
 /log
+spec/examples.txt
