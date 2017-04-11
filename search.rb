@@ -6,13 +6,18 @@ require './helpers/pagination'
 class Search < Sinatra::Application
   Parliament::Request::OpenSearchRequest.base_url = ENV['OPENSEARCH_DESCRIPTION_URL']
 
+  # TODO: Implement a more robust solution - see http://stackoverflow.com/questions/6221019/is-it-possible-to-to-rewrite-the-base-url-in-sinatra
+  before do
+    env['PATH_INFO'].sub!(/^\/search/, '')
+  end
+
   get '/' do
     @query_parameter = nil
 
     haml :'search/index', layout: :'layouts/layout'
   end
 
-  get '/search' do
+  get '/results' do
     @query_parameter = params[:q]
     @start_page = params[:start_page] || Parliament::Request::OpenSearchRequest.open_search_parameters[:start_page]
     @start_page = @start_page.to_i

@@ -11,10 +11,10 @@ RSpec.describe Search, vcr: true do
     end
   end
 
-  describe 'GET /search' do
+  describe 'GET /results' do
     context 'a valid search' do
       before(:each) do
-        get '/search', { q: 'banana' }
+        get '/results', { q: 'banana' }
       end
 
       it 'should have a response with http status ok (200)' do
@@ -26,7 +26,7 @@ RSpec.describe Search, vcr: true do
       end
 
       it 'should return the number of results' do
-        expect(last_response.body).to include('About 19100 results')
+        expect(last_response.body).to include('About 18600 results')
       end
 
       it 'should return title, link and summary for each entry' do
@@ -38,7 +38,7 @@ RSpec.describe Search, vcr: true do
 
     context 'an invalid search' do
       before(:each) do
-        get '/search', { q: 'fdsfsd' }
+        get '/results', { q: 'fdsfsd' }
       end
 
       it 'should have a response with http status ok (200)' do
