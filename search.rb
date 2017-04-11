@@ -8,7 +8,13 @@ class Search < Sinatra::Application
 
   # TODO: Implement a more robust solution - see http://stackoverflow.com/questions/6221019/is-it-possible-to-to-rewrite-the-base-url-in-sinatra
   before do
-    env['PATH_INFO'].sub!(/^\/search/, '')
+    env['PATH_INFO'].sub!(/^\/search\//, '/')
+  end
+
+  get %r{(/search)$} do
+    logger.info 'Redirecting to trailing slash'
+
+    redirect '/search/'
   end
 
   get '/' do
