@@ -28,13 +28,11 @@ gem 'dotenv'
 # Use sanitize to prevent cross site scripting
 gem 'sanitize'
 
-
 group :development do
   gem 'shotgun'
 end
 
 group :test do
-  gem 'rake'
   gem 'capybara'
   gem 'rspec'
   gem 'simplecov', require: false
