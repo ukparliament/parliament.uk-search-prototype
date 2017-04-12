@@ -1,3 +1,5 @@
+%h1 Search
+
 = haml :'search/search_box'
 
 %p= "About #{@results_total} results"
@@ -9,15 +11,14 @@
       %p{ style: 'word-wrap: break-word;' }= entry.url
       %p= entry.summary
 
-%ul
+.block
   - unless current_page == 1
-    %li
-      %a{ :href => "/search?q=#{@query_parameter}&start_page=#{start_page(previous_page)}" } Previous
-
-  - page_range.each do |page|
-    %li
-      %a{ :href => "/search?q=#{@query_parameter}&start_page=#{start_page(page)}" }= page
+    %a{ :href => "/search/results?q=#{@query_parameter}&start_page=#{start_page(previous_page)}" } Previous
 
   - unless current_page == last_page
-    %li
-      %a{ :href => "/search?q=#{@query_parameter}&start_page=#{start_page(next_page)}" } Next
+    %a{ :href => "/search/results?q=#{@query_parameter}&start_page=#{start_page(next_page)}" } Next
+
+  %ol.navigation.navigation--number
+    - page_range.each do |page|
+      %li
+        %a{ :href => "/search/results?q=#{@query_parameter}&start_page=#{start_page(page)}" }= page
