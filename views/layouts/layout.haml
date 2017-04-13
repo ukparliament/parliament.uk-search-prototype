@@ -1,0 +1,35 @@
+!!! 5
+%html{lang:'en'}
+  %head
+    %title Search - UK Parliament
+    %link{rel: 'stylesheet', href: "#{ENV.fetch('ASSET_LOCATION_URL', 'https://s3-eu-west-1.amazonaws.com/web1devci.pugin-website')}/1.2.8/stylesheets/main.css" }
+    %meta{name: 'viewport', content: 'width=device-width, initial-scale=1.0'}
+    %meta{'http-equiv': 'X-UA-Compatible', content: 'IE=edge'}
+    - if ENV['GTM_KEY']
+      <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','#{ENV['GTM_KEY']}');</script>
+  %body.no-js
+    - if ENV['GTM_KEY']
+      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=#{ENV['GTM_KEY']}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    %a.sr-only.sr-only--focusable{href: '#content', id: 'skiplink'} Skip to main content
+    %header
+      .container--full-grid
+        %a.logo{href: '/'} UK Parliament
+    .highlight__status.status
+      .container--full-grid
+        %p
+          This is a test website, so may be inaccurate or misleading -
+          %a{href: 'https://ukparliament-self.achieveservice.com/AchieveForms/?form_uri=sandbox://AF-Form-337e2b87-4c8b-40f7-bb72-a80f15284b21&category=AF-Category-108691b0-e15c-46d7-9d16-7ad0d35cdb2a&isPublished=false', target: '_blank', title: 'website opens in a new window'} give feedback
+          to help improve it. Return to
+          %a{href: 'https://www.parliament.uk'} current website.
+    %main#content
+      .container--full-grid
+        = yield
+    %footer
+      .container--full-grid
+        %h2.logo UK Parliament
+        %ul.list
+          %li
+            %a{href: 'https://www.parliament.uk/'} Current website
+          %li
+            %a{href: 'http://beta.parliament.uk/meta/cookie-policy'} Cookie policy
+    %script{src: "#{ENV.fetch('ASSET_LOCATION_URL', 'https://s3-eu-west-1.amazonaws.com/web1devci.pugin-website')}/1.2.8/javascripts/main.js"}
