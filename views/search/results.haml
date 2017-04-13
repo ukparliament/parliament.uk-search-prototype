@@ -13,10 +13,10 @@
 
 .block
   - unless current_page == 1
-    %a{ :href => "/search/results?q=#{@query_parameter}&start_page=#{start_page(previous_page)}" } Previous
+    %a.navigation-control.navigation-control--left{ :href => "/search/results?q=#{@query_parameter}&start_page=#{start_page(previous_page)}" } Previous
 
   - unless current_page == last_page
-    %a{ :href => "/search/results?q=#{@query_parameter}&start_page=#{start_page(next_page)}" } Next
+    %a.navigation-control.navigation-control--right{ :href => "/search/results?q=#{@query_parameter}&start_page=#{start_page(next_page)}" } Next
 
   %ol.navigation.navigation--number
     - page_range.each do |page|
