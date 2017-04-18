@@ -19,7 +19,11 @@ class Search < Sinatra::Application
 	set :view_paths, [ './views/', Pugin.views_path ]
   set :view_options, { :layout => '/pugin/layouts/pugin-sinatra' }
 
-  Parliament::Request::OpenSearchRequest.base_url = ENV['OPENSEARCH_DESCRIPTION_URL']
+  begin
+    Parliament::Request::OpenSearchRequest.description_url = ENV['OPENSEARCH_DESCRIPTION_URL']
+  rescue Errno::ECONNREFUSED => e
+    raise StandardError, "There was an error getting the description file from OPENSEARCH_DESCRIPTION_URL environment variable value: '#{ENV['OPENSEARCH_DESCRIPTION_URL']}' - #{e.message}"
+  end
 
   # TODO: Implement a more robust solution - see http://stackoverflow.com/questions/6221019/is-it-possible-to-to-rewrite-the-base-url-in-sinatra
   before do
@@ -32,38 +36,6 @@ class Search < Sinatra::Application
     redirect '/search/'
   end
 
-	helpers do
-		# Construct a link to +url_fragment+, which should be given relative to
-		# the base of this Sinatra app.  The mode should be either
-		# <code>:path_only</code>, which will generate an absolute path within
-		# the current domain (the default), or <code>:full_url</code>, which will
-		# include the site name and port number.  The latter is typically necessary
-		# for links in RSS feeds.  Example usage:
-		#
-		#   link_to "/foo" # Returns "http://example.com/myapp/foo"
-		#
-		#--
-		# Thanks to cypher23 on #mephisto and the folks on #rack for pointing me
-		# in the right direction.
-		def link_to url_fragment, mode=:path_only
-			case mode
-			when :path_only
-				base = request.script_name
-			when :full_url
-				if (request.scheme == 'http' && request.port == 80 ||
-						request.scheme == 'https' && request.port == 443)
-					port = ""
-				else
-					port = ":#{request.port}"
-				end
-				base = "#{request.scheme}://#{request.host}#{port}#{request.script_name}"
-			else
-				raise "Unknown script_url mode #{mode}"
-			end
-			"#{base}#{url_fragment}"
-		end
-	end
-
   get '/' do
     @query_parameter = nil
 
@@ -72,6 +44,9 @@ class Search < Sinatra::Application
 
   get '/results' do
     @query_parameter = params[:q]
+    # Escape @query_parameter that replaces all 'unsafe' characters with a UTF-8 hexcode which is safer to use when making an OpenSearch request
+    @escaped_query_parameter = CGI.escape(@query_parameter)
+
     @start_page = params[:start_page] || Parliament::Request::OpenSearchRequest.open_search_parameters[:start_page]
     @start_page = @start_page.to_i
     @count = Parliament::Request::OpenSearchRequest.open_search_parameters[:count]
@@ -80,8 +55,8 @@ class Search < Sinatra::Application
                                                          builder: Parliament::Builder::OpenSearchResponseBuilder)
 
     begin
-      logger.info "Making a query for '#{@query_parameter}' using the base_url: '#{request.base_url}'"
-      @results = request.get({ query: @query_parameter, start_page: @start_page })
+      logger.info "Making a query for '#{@query_parameter}' => '#{@escaped_query_parameter}' using the base_url: '#{request.base_url}'"
+      @results = request.get({ query: @escaped_query_parameter, start_page: @start_page })
       @results_total = @results.totalResults
 
       show 'search/results'

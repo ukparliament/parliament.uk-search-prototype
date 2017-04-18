@@ -53,7 +53,7 @@ GEM
     multipart-post (2.0.0)
     nokogiri (1.7.1)
       mini_portile2 (~> 2.1.0)
-    parliament-opensearch (0.2.2)
+    parliament-opensearch (0.2.3)
       feedjira (~> 2.1, >= 2.1.2)
       parliament-ruby (~> 0.7.4)
     parliament-ruby (0.7.4)
@@ -73,6 +73,7 @@ GEM
     rack-vcr (0.1.4)
       vcr (~> 2.9)
     rainbow (2.2.1)
+    rake (12.0.0)
     rdf (2.2.3)
       hamster (~> 3.0)
       link_header (~> 0.0, >= 0.0.8)
@@ -138,6 +139,7 @@ DEPENDENCIES
   pugin (>= 0.5.0.pre)
   puma
   rack-vcr
+  rake
   rspec
   rubocop
   simplecov
