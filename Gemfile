@@ -13,7 +13,7 @@ gem 'puma'
 # Use Parliament-Opensearch to handle our Opensearch requests
 gem 'parliament-opensearch'
 
-gem 'pugin', path: '../parliament.uk-pugin-components-rails'
+gem 'pugin', '>= 0.5.0.pre'
 
 gem 'i18n'
 
