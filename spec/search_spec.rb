@@ -11,6 +11,18 @@ RSpec.describe Search, vcr: true do
     end
   end
 
+  describe 'GET /search' do
+    before(:each) do
+      get '/search'
+    end
+
+    it 'should redirect to /search/' do
+      expect(last_response).to be_redirect   # This works, but I want it to be more specific
+      follow_redirect!
+      expect(last_request.url).to eq('http://example.org/search/')
+    end
+  end
+
   describe 'GET /results' do
     context 'a valid search' do
       before(:each) do
