@@ -147,6 +147,7 @@ DEPENDENCIES
   pugin (= 0.6.3)
   puma
   rack-vcr
+  rake
   rspec
   rubocop
   sanitize

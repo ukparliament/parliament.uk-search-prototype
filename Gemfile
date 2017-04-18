@@ -33,6 +33,7 @@ group :development do
 end
 
 group :test do
+  gem 'rake'
   gem 'capybara'
   gem 'rspec'
   gem 'simplecov', require: false
