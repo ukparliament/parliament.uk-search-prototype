@@ -16,7 +16,6 @@ require 'i18n/backend/fallbacks'
 class Search < Sinatra::Application
 	register Sinatra::MultiView
 
-	#set :views, [Pugin.views_path, 'views']
 	set :view_paths, [ './views/', Pugin.views_path ]
   set :view_options, { :layout => '/pugin/layouts/pugin-sinatra' }
 
