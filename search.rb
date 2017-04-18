@@ -25,6 +25,9 @@ class Search < Sinatra::Application
 
   get '/results' do
     @query_parameter = params[:q]
+    # Escape @query_parameter that replaces all 'unsafe' characters with a UTF-8 hexcode which is safer to use when making an OpenSearch request
+    @escaped_query_parameter = CGI.escape(@query_parameter)
+
     @start_page = params[:start_page] || Parliament::Request::OpenSearchRequest.open_search_parameters[:start_page]
     @start_page = @start_page.to_i
     @count = Parliament::Request::OpenSearchRequest.open_search_parameters[:count]
@@ -33,8 +36,8 @@ class Search < Sinatra::Application
                                                          builder: Parliament::Builder::OpenSearchResponseBuilder)
 
     begin
-      logger.info "Making a query for '#{@query_parameter}' using the base_url: '#{request.base_url}'"
-      @results = request.get({ query: @query_parameter, start_page: @start_page })
+      logger.info "Making a query for '#{@query_parameter}' => '#{@escaped_query_parameter}' using the base_url: '#{request.base_url}'"
+      @results = request.get({ query: @escaped_query_parameter, start_page: @start_page })
       @results_total = @results.totalResults
 
       haml :'search/results', layout: :'layouts/layout'
