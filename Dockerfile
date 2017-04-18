@@ -21,6 +21,7 @@ RUN apk --update add --virtual build-dependencies build-base ruby-dev && \
       bundle install --without development test --path vendor/bundle; \
       apk del build-dependencies; \
     else \
+      gem install rake --no-ri --no-rdoc; \
       bundle install --path vendor/bundle; \
     fi
 
