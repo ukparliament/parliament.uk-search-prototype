@@ -61,5 +61,12 @@ RSpec.describe Search, vcr: true do
         expect(last_response.body).to include("There were no results for 'fdsfsd'.")
       end
     end
+
+    context 'search for a non-ascii character' do
+      it 'should have a response with http status ok (200)' do
+        get '/results', { q: 'Ü' }
+        expect(last_response).to be_ok
+      end
+    end
   end
 end
