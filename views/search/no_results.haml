@@ -1,8 +1,5 @@
-- content_for :title do
-  = "No Results - Search"
-
 %h1 Search
 
-= partial 'search/search_box'
+= haml :'search/search_box'
 
 %p= "There were no results for '#{@query_parameter}'."

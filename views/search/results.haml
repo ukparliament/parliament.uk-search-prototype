@@ -1,9 +1,6 @@
-- content_for :title do
-  = "Results - Search"
-
 %h1 Search
 
-= partial 'search/search_box'
+= haml :'search/search_box'
 
 %p= "About #{@results_total} results"
 
