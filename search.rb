@@ -3,7 +3,6 @@ require 'sinatra/content_for'
 
 require './multiview'
 
-
 require 'pugin'
 
 require 'parliament'
@@ -51,7 +50,9 @@ class Search < Sinatra::Application
     @start_page = @start_page.to_i
     @count = Parliament::Request::OpenSearchRequest.open_search_parameters[:count]
 
-    request = Parliament::Request::OpenSearchRequest.new(headers: { 'Accept' => 'application/atom+xml' },
+    p ENV['OPENSEARCH_AUTH_TOKEN']
+    request = Parliament::Request::OpenSearchRequest.new(headers: { 'Accept' => 'application/atom+xml',
+                                                                    'Ocp-Apim-Subscription-Key' => ENV['OPENSEARCH_AUTH_TOKEN']},
                                                          builder: Parliament::Builder::OpenSearchResponseBuilder)
 
     begin
