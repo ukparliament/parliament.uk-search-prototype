@@ -1,5 +1,6 @@
 .idea/*
 /coverage
 */.idea/*
+.DS_Store
 /log
 spec/examples.txt
