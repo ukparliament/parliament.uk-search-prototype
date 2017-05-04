@@ -1,8 +1,10 @@
 - content_for :title do
-  = "No Results - Search"
+  No Results - Search
 
-%h1 Search
+#content.section--primary
+  .container
+    %h1 Search
 
-= partial 'search/search_box'
+    = partial 'search/search_box'
 
-%p= "There were no results for '#{@query_parameter}'."
+    %p= "There were no results for '#{@query_parameter}'."
