@@ -56,6 +56,7 @@ build: # Using the variables defined above, run `docker build`, tagging the imag
 		--build-arg GTM_KEY=$(GTM_KEY) \
 		--build-arg ASSET_LOCATION_URL=$(ASSET_LOCATION_URL) \
 		--build-arg RACK_ENV=$(RACK_ENV) \
+		--build-arg OPENSEARCH_AUTH_TOKEN=$(OPENSEARCH_AUTH_TOKEN) \
 		.
 
 run: # Run the Docker image we have created, mapping the HOST_PORT and CONTAINER_PORT
