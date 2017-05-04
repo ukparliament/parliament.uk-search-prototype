@@ -31,7 +31,7 @@ GEM
       faraday_middleware (>= 0.9)
       loofah (>= 2.0)
       sax-machine (>= 1.0)
-    haml (5.0.0)
+    haml (5.0.1)
       temple (>= 0.8.0)
       tilt
     hashdiff (0.3.4)
@@ -48,7 +48,7 @@ GEM
     multipart-post (2.0.0)
     nokogiri (1.7.1)
       mini_portile2 (~> 2.1.0)
-    parliament-opensearch (0.2.4)
+    parliament-opensearch (0.2.5)
       activesupport (>= 5.0.0.1)
       feedjira (~> 2.1, >= 2.1.2)
     parliament-ruby (0.7.6)
@@ -127,7 +127,7 @@ DEPENDENCIES
   capybara
   haml
   i18n
-  parliament-opensearch (~> 0.2.4)
+  parliament-opensearch (~> 0.2.5)
   parliament-ruby (~> 0.7.6)
   pugin (>= 0.5.0.pre)
   puma
