@@ -13,11 +13,13 @@ ADD Gemfile.lock /app/
 # Set the working DIR.
 WORKDIR /app
 
-# Install system and application dependencies.
+# Install system and bundler
 RUN apk --update add --virtual build-dependencies build-base ruby-dev && \
     gem install bundler --no-ri --no-rdoc && \
-    echo "Environment (RACK_ENV): $RACK_ENV" && \
-    if [ "$RACK_ENV" == "production" ]; then \
+    echo "Environment (RACK_ENV): $RACK_ENV"
+
+# Install application dependencies.
+RUN if [ "$RACK_ENV" == "production" ]; then \
       bundle install --without development test --path vendor/bundle; \
       apk del build-dependencies; \
     else \
