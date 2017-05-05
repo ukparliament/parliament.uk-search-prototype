@@ -56,7 +56,7 @@ GEM
       ast (~> 2.2)
     powerpack (0.1.1)
     public_suffix (2.0.5)
-    pugin (0.6.1)
+    pugin (0.6.2)
     puma (3.8.2)
     rack (1.6.5)
     rack-protection (1.5.3)
@@ -129,7 +129,7 @@ DEPENDENCIES
   i18n
   parliament-opensearch (~> 0.2.5)
   parliament-ruby (~> 0.7.6)
-  pugin (>= 0.5.0.pre)
+  pugin (= 0.6.2)
   puma
   rack-vcr
   rake
