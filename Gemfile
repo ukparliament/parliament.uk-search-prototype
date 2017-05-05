@@ -14,7 +14,7 @@ gem 'parliament-ruby', '~> 0.7.6'
 # Use Parliament-Opensearch to handle our Opensearch requests
 gem 'parliament-opensearch', '~> 0.2.5'
 
-gem 'pugin', '>= 0.5.0.pre'
+gem 'pugin', '0.6.2'
 
 gem 'i18n'
 
