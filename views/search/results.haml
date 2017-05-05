@@ -11,14 +11,15 @@
 
     %p= "About #{@results_total} results"
 
-%section#content
-  .container
-    %ol.list--box
-      - @results.entries.each do |entry|
-        %li
-          %a{ href: "#{entry.url}" }= entry.title
-          %p{ style: 'word-wrap: break-word;' }= entry.url
-          %p= entry.summary
+- if @results_total.to_i >= 1
+  %section#content
+    .container
+      %ol.list--box
+        - @results.entries.each do |entry|
+          %li
+            %a{ href: "#{entry.url}" }= entry.title
+            %p{ style: 'word-wrap: break-word;' }= entry.url
+            %p= entry.summary
 
 %section
   .container
@@ -38,4 +39,5 @@
               - else
                 %span= current_page
     - else
-      %p= "There were no results for &ldquo;#{@query_parameter}&rdquo;."
+      .highlight--box.highlight--caution__soft
+        %p= "There were no results for &ldquo;#{@query_parameter}&rdquo;."
