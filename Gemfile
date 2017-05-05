@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 # Use Sinatra for our web server
 gem 'sinatra', '~> 1.4.8'
+gem 'sinatra-contrib'
 
 # Use HAML for our view rendering
 gem 'haml'
@@ -9,8 +10,13 @@ gem 'haml'
 # Use Puma as our web server
 gem 'puma'
 
+gem 'parliament-ruby', '~> 0.7.6'
 # Use Parliament-Opensearch to handle our Opensearch requests
-gem 'parliament-opensearch'
+gem 'parliament-opensearch', '~> 0.2.5'
+
+gem 'pugin', '>= 0.5.0.pre'
+
+gem 'i18n'
 
 group :development, :test do
   gem 'rubocop'

@@ -1,24 +1,41 @@
-%h1 Search
+- content_for :title do
+  Results - Search
 
-= haml :'search/search_box'
+.section--primary
+  .container
+    %h1 
+      Search results for 
+      %span.sr-only &ldquo;#{@query_parameter}&rdquo;
 
-%p= "About #{@results_total} results"
+    = partial 'search/search_box'
 
-%ul.list
-  - @results.entries.each do |entry|
-    %li.list__item
-      %a{ :href => "#{entry.url}" }= entry.title
-      %p{ style: 'word-wrap: break-word;' }= entry.url
-      %p= entry.summary
+    %p= "About #{@results_total} results"
 
-.block
-  - unless current_page == 1
-    %a.navigation-control.navigation-control--left{ :href => "/search/results?q=#{@query_parameter}&start_page=#{start_page(previous_page)}" } Previous
+%section#content
+  .container
+    %ol.list--box
+      - @results.entries.each do |entry|
+        %li
+          %a{ href: "#{entry.url}" }= entry.title
+          %p{ style: 'word-wrap: break-word;' }= entry.url
+          %p= entry.summary
 
-  - unless current_page == last_page
-    %a.navigation-control.navigation-control--right{ :href => "/search/results?q=#{@query_parameter}&start_page=#{start_page(next_page)}" } Next
+%section
+  .container
+    - if @results_total.to_i >= 1
+      %nav.navigation--number{ aria:{ label: 'Pagination' } }
+        - unless current_page == 1
+          %a.navigation-control--left{ href: "/search/results?q=#{@query_parameter}&start_page=#{start_page(previous_page)}" } Previous
 
-  %ol.navigation.navigation--number
-    - page_range.each do |page|
-      %li
-        %a{ :href => "/search/results?q=#{@query_parameter}&start_page=#{start_page(page)}" }= page
+        - unless current_page == last_page
+          %a.navigation-control--right{ href: "/search/results?q=#{@query_parameter}&start_page=#{start_page(next_page)}" } Next
+
+        %ol
+          - page_range.each do |page|
+            %li{ class: ('active' if (page == current_page)), 'data-number': page }
+              - unless page == current_page
+                %a{ href: "/search/results?q=#{@query_parameter}&start_page=#{start_page(page)}" }= page
+              - else
+                %span= current_page
+    - else
+      %p= "There were no results for &ldquo;#{@query_parameter}&rdquo;."

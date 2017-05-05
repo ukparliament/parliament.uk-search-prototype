@@ -11,6 +11,18 @@ RSpec.describe Search, vcr: true do
     end
   end
 
+  describe 'GET /search' do
+    before(:each) do
+      get '/search'
+    end
+
+    it 'should redirect to /search/' do
+      expect(last_response).to be_redirect   # This works, but I want it to be more specific
+      follow_redirect!
+      expect(last_request.url).to eq('http://example.org/search/')
+    end
+  end
+
   describe 'GET /results' do
     context 'a valid search' do
       before(:each) do
@@ -26,7 +38,7 @@ RSpec.describe Search, vcr: true do
       end
 
       it 'should return the number of results' do
-        expect(last_response.body).to include('About 18600 results')
+        expect(last_response.body).to include('About 19200 results')
       end
 
       it 'should return title, link and summary for each entry' do
@@ -47,6 +59,13 @@ RSpec.describe Search, vcr: true do
 
       it 'should contain no results' do
         expect(last_response.body).to include("There were no results for 'fdsfsd'.")
+      end
+    end
+
+    context 'search for a non-ascii character' do
+      it 'should have a response with http status ok (200)' do
+        get '/results', { q: 'Ü' }
+        expect(last_response).to be_ok
       end
     end
   end

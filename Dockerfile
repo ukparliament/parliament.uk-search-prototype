@@ -5,7 +5,7 @@ ARG OPENSEARCH_DESCRIPTION_URL
 ARG GTM_KEY
 ARG ASSET_LOCATION_URL
 ARG RACK_ENV=production
-
+ARG OPENSEARCH_AUTH_TOKEN
 # Add Gemfiles.
 ADD Gemfile /app/
 ADD Gemfile.lock /app/
@@ -21,6 +21,7 @@ RUN apk --update add --virtual build-dependencies build-base ruby-dev && \
       bundle install --without development test --path vendor/bundle; \
       apk del build-dependencies; \
     else \
+      gem install rake --no-ri --no-rdoc; \
       bundle install --path vendor/bundle; \
     fi
 
@@ -40,6 +41,7 @@ ENV OPENSEARCH_DESCRIPTION_URL $OPENSEARCH_DESCRIPTION_URL
 ENV GTM_KEY $GTM_KEY
 ENV ASSET_LOCATION_URL $ASSET_LOCATION_URL
 ENV RACK_ENV $RACK_ENV
+ENV OPENSEARCH_AUTH_TOKEN $OPENSEARCH_AUTH_TOKEN
 
 # Add additional labels to our image
 ARG GIT_SHA=unknown
