@@ -8,7 +8,9 @@ module PaginationHelper
   end
 
   def last_page
-    if current_page < 7
+    if @results_total.to_i < 10 * @count
+      (@results_total.to_f / @count).ceil
+    elsif current_page < 7
       10
     else
       current_page + 4 < (@results_total.to_f / @count).ceil ? current_page + 4 : (@results_total.to_f / @count).ceil
