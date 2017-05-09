@@ -43,8 +43,9 @@ class Search < Sinatra::Application
 
   get '/results' do
     @query_parameter = params[:q]
+
     # Escape @query_parameter that replaces all 'unsafe' characters with a UTF-8 hexcode which is safer to use when making an OpenSearch request
-    @escaped_query_parameter = CGI.escape(@query_parameter)
+    @escaped_query_parameter = CGI.escape(@query_parameter)[0, 2048]
 
     @start_page = params[:start_page] || Parliament::Request::OpenSearchRequest.open_search_parameters[:start_page]
     @start_page = @start_page.to_i
