@@ -58,7 +58,7 @@ RSpec.describe Search, vcr: true do
       end
 
       it 'should contain no results' do
-        expect(last_response.body).to include('There were no results for &ldquo;fdsfsd&rdquo;.')
+        expect(last_response.body).to include('There are no results for your search.')
       end
     end
 
