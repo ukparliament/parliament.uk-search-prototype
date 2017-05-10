@@ -79,5 +79,15 @@ RSpec.describe Search, vcr: true do
           .with(headers: {'Accept'=>['*/*', 'application/atom+xml'], 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Ocp-Apim-Subscription-Key'=>ENV['OPENSEARCH_AUTH_TOKEN'], 'User-Agent'=>'Ruby'}).once
       end
     end
+
+    context '<br> tag in search results' do
+      before(:each) do
+        get '/results', { q: 'banana' }
+      end
+
+      it 'should strip <br> tag' do
+        expect(last_response.body).not_to include('<br>')
+      end
+    end
   end
 end
