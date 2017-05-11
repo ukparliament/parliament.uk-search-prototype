@@ -56,6 +56,7 @@ build: # Using the variables defined above, run `docker build`, tagging the imag
 		--build-arg GTM_KEY=$(GTM_KEY) \
 		--build-arg ASSET_LOCATION_URL=$(ASSET_LOCATION_URL) \
 		--build-arg RACK_ENV=$(RACK_ENV) \
+		--build-arg OPENSEARCH_AUTH_TOKEN=$(OPENSEARCH_AUTH_TOKEN) \
 		.
 
 run: # Run the Docker image we have created, mapping the HOST_PORT and CONTAINER_PORT
@@ -63,7 +64,7 @@ run: # Run the Docker image we have created, mapping the HOST_PORT and CONTAINER
 
 test: # Build the docker image in development mode, using a test PARLIAMENT_BASE_URL. Then run rake within a Docker container using our image.
 	RACK_ENV=development make build
-	docker run $(IMAGE):latest bundle exec rspec
+	docker run --rm $(IMAGE):latest bundle exec rspec
 
 push: # Push the Docker images we have build to the configured Docker repository (Run in GoCD to push the image to AWS)
 	docker push $(IMAGE):$(VERSION)
@@ -77,6 +78,7 @@ scan-image:
 rmi: # Remove local versions of our images.
 	docker rmi $(IMAGE):$(VERSION)
 	docker rmi $(IMAGE):latest
+	docker rmi -f $(docker images | grep "^<none>" | awk '{print $3}') || true
 
 deploy-ecs: # Deploy our new Docker image onto an AWS cluster (Run in GoCD to deploy to various environments).
 	./aws_ecs/register-task-definition.sh $(APP_NAME)

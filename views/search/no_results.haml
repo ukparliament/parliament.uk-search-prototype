@@ -1,5 +1,13 @@
-%h1 Search
+- content_for :title do
+  No Results - Search
 
-= haml :'search/search_box'
+.section--primary
+  .container
+    %h1 Search
 
-%p= "There were no results for '#{@query_parameter}'."
+    = partial 'search/search_box'
+
+%section#content
+  .container
+    .highlight--box.highlight--caution__soft
+      %p= "There are no results for your search."

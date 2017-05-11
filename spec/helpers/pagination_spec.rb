@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-RSpec.describe PaginationHelper do
+RSpec.describe Parliament::Search::Helpers::PaginationHelper do
   subject do
-    Class.new { include PaginationHelper }
+    Class.new { include Parliament::Search::Helpers::PaginationHelper }
   end
 
   before(:each) do
@@ -29,7 +29,15 @@ RSpec.describe PaginationHelper do
   end
 
   context '#last_page' do
+    it 'calculates the last page when the results_total is less than the count * 10' do
+      @test_class.instance_variable_set(:@results_total, 25)
+
+      expect(@test_class.last_page).to eq(3)
+    end
+
     it 'calculates the last page when the current page is less than 7' do
+      @test_class.instance_variable_set(:@results_total, 154)
+
       expect(@test_class.last_page).to eq(10)
     end
 
@@ -50,6 +58,8 @@ RSpec.describe PaginationHelper do
 
   context '#page_range' do
     it 'calculates the page_range' do
+      @test_class.instance_variable_set(:@results_total, 154)
+
       expect(@test_class.page_range).to eq([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
     end
   end
