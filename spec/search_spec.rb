@@ -79,5 +79,15 @@ RSpec.describe Parliament::Search::Application, vcr: true do
         expect(last_response.body).not_to include('<br>')
       end
     end
+
+    context 'prevents xss on search' do
+     before(:each) do
+       get '/', { q: '<script>alert(document.cookie)</script>'}
+     end
+     it 'should prevent xss on search' do
+       expect(last_response.body).not_to include('<script>alert(document.cookie)</script>')
+     end
+   end
+   
   end
 end
