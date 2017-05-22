@@ -25,6 +25,10 @@ gem 'i18n'
 # Use dotenv to override environment variables
 gem 'dotenv'
 
+# Use sanitize to prevent cross site scripting
+gem 'sanitize'
+
+
 group :development do
   gem 'shotgun'
 end

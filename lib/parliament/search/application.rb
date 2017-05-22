@@ -15,6 +15,7 @@ require 'parliament/search/helpers'
 # Require translations
 require 'i18n'
 require 'i18n/backend/fallbacks'
+require 'sanitize'
 
 module Parliament
   module Search
@@ -58,8 +59,8 @@ module Parliament
         return show 'search/index' unless @query_parameter
 
         # Escape @query_parameter that replaces all 'unsafe' characters with a UTF-8 hexcode which is safer to use when making an OpenSearch request
+        @query_parameter = Sanitize.fragment(@query_parameter, Sanitize::Config::RELAXED)
         @escaped_query_parameter = CGI.escape(@query_parameter)[0, 2048]
-
         @start_page = params[:start_page] || Parliament::Request::OpenSearchRequest.open_search_parameters[:start_page]
         @start_page = @start_page.to_i
         @count = Parliament::Request::OpenSearchRequest.open_search_parameters[:count]
