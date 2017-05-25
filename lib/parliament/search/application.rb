@@ -44,11 +44,11 @@ module Parliament
       end
 
       before do
-        uri = env['REQUEST_URI']
+        uri = request.path
 
-        if uri && uri[uri.length-1] != '/' && env['PATH_INFO'] == ''
-          puts 'Redirecting to add a trailing slash'
-          redirect uri + '/'
+        if uri && uri[-8..-1] == '/search/' && env['PATH_INFO'] == '/'
+          puts 'Redirecting to remove a trailing slash'
+          redirect uri[0...-1]
         end
       end
 
