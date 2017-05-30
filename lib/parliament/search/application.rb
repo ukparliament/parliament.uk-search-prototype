@@ -65,7 +65,6 @@ module Parliament
         @start_page = @start_page.to_i
         @count = Parliament::Request::OpenSearchRequest.open_search_parameters[:count]
 
-        p ENV['OPENSEARCH_AUTH_TOKEN']
         request = Parliament::Request::OpenSearchRequest.new(headers: { 'Accept' => 'application/atom+xml',
                                                                         'Ocp-Apim-Subscription-Key' => ENV['OPENSEARCH_AUTH_TOKEN']},
                                                              builder: Parliament::Builder::OpenSearchResponseBuilder)
@@ -73,7 +72,7 @@ module Parliament
         begin
           logger.info "Making a query for '#{@query_parameter}' => '#{@escaped_query_parameter}' using the base_url: '#{request.base_url}'"
           @results = request.get({ query: @escaped_query_parameter, start_page: @start_page })
-          @results.entries.each { |result| result.summary.gsub!(/<br>/, '') }
+          @results.entries.each { |result| result.summary.gsub!(/<br>/, '') if result.summary }
 
           @results_total = @results.totalResults
 
