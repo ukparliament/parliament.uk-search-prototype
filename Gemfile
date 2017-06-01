@@ -16,8 +16,11 @@ gem 'parliament-ruby', '~> 0.7'
 # Use Parliament-Opensearch to handle our Opensearch requests
 gem 'parliament-opensearch', '~> 0.2'
 
+# Use bandiera-client for feature flagging
+gem 'bandiera-client'
+
 # Use Pugin for front-end components and templates
-gem 'pugin', '0.6.3'
+gem 'pugin', '~> 0.7'
 
 # Use i18n for translations
 gem 'i18n'
