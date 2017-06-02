@@ -14,6 +14,8 @@ http_interactions:
       - application/atom+xml
       User-Agent:
       - Ruby
+      Ocp-Apim-Subscription-Key:
+      - 7010a4b704fa4e9580c900922dccafd5
   response:
     status:
       code: 404
@@ -24,15 +26,15 @@ http_interactions:
       Content-Type:
       - text/html
       Set-Cookie:
-      - ARRAffinity=9db3f02a32b1f6ccb0b1ec4a2b0d71fe64351b6d3571cc936313fc29cf6e64af;Path=/;Domain=20170418155059search.azurewebsites.net
+      - ARRAffinity=2341b754ef97daa69db43f3b1555b5c9df8f30bc228f0c2a8a16f7cda08e30fa;Path=/;Domain=20170418155059search.azurewebsites.net
       X-Powered-By:
       - ASP.NET
       Date:
-      - Mon, 08 May 2017 15:32:04 GMT
+      - Mon, 22 May 2017 09:17:03 GMT
     body:
       encoding: UTF-8
       string: The resource you are looking for has been removed, had its name changed,
         or is temporarily unavailable.
     http_version: 
-  recorded_at: Mon, 08 May 2017 15:32:16 GMT
+  recorded_at: Mon, 22 May 2017 09:17:04 GMT
 recorded_with: VCR 2.9.3

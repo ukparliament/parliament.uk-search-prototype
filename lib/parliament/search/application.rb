@@ -3,22 +3,32 @@ require 'sinatra'
 require 'sinatra/namespace'
 require 'sinatra/content_for'
 
-# Pugin components for view
-require 'pugin'
-
 # Require Parliament-Ruby gems
 require 'parliament/open_search'
 
 # Require helper classes
 require 'parliament/search/helpers'
 
+# Manually require bandiera for Pugin to load
+require 'bandiera/client'
+
+# Pugin components for view
+require 'pugin'
+
 # Require translations
 require 'i18n'
 require 'i18n/backend/fallbacks'
+require 'sanitize'
+
+# Require Pugin Features
+require 'pugin/helpers/controller_helpers'
 
 module Parliament
   module Search
     class Application < Sinatra::Base
+      include Pugin::Helpers::ControllerHelpers
+      include Parliament::Search::Helpers::BandieraClient
+
       helpers Sinatra::ContentFor
       helpers Parliament::Search::Helpers::PaginationHelper
 
@@ -43,11 +53,15 @@ module Parliament
       end
 
       before do
-        uri = env['REQUEST_URI']
+        uri = request.path
+        Pugin::Feature::Bandiera.reset
 
-        if uri && uri[uri.length-1] != '/' && env['PATH_INFO'] == ''
-          puts 'Redirecting to add a trailing slash'
-          redirect uri + '/'
+        if uri && uri[-8..-1] == '/search/' && env['PATH_INFO'] == '/'
+          puts 'Redirecting to remove a trailing slash'
+
+          redirect_uri = URI(uri[0...-1])
+          redirect_uri.query = URI.encode_www_form(request.params) if request.params.length
+          redirect redirect_uri
         end
       end
 
@@ -58,13 +72,12 @@ module Parliament
         return show 'search/index' unless @query_parameter
 
         # Escape @query_parameter that replaces all 'unsafe' characters with a UTF-8 hexcode which is safer to use when making an OpenSearch request
+        @query_parameter = Sanitize.fragment(@query_parameter, Sanitize::Config::RELAXED)
         @escaped_query_parameter = CGI.escape(@query_parameter)[0, 2048]
-
         @start_page = params[:start_page] || Parliament::Request::OpenSearchRequest.open_search_parameters[:start_page]
         @start_page = @start_page.to_i
         @count = Parliament::Request::OpenSearchRequest.open_search_parameters[:count]
 
-        p ENV['OPENSEARCH_AUTH_TOKEN']
         request = Parliament::Request::OpenSearchRequest.new(headers: { 'Accept' => 'application/atom+xml',
                                                                         'Ocp-Apim-Subscription-Key' => ENV['OPENSEARCH_AUTH_TOKEN']},
                                                              builder: Parliament::Builder::OpenSearchResponseBuilder)
@@ -72,7 +85,7 @@ module Parliament
         begin
           logger.info "Making a query for '#{@query_parameter}' => '#{@escaped_query_parameter}' using the base_url: '#{request.base_url}'"
           @results = request.get({ query: @escaped_query_parameter, start_page: @start_page })
-          @results.entries.each { |result| result.summary.gsub!(/<br>/, '') }
+          @results.entries.each { |result| result.summary.gsub!(/<br>/, '') if result.summary }
 
           @results_total = @results.totalResults
 
