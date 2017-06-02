@@ -57,13 +57,14 @@ build: # Using the variables defined above, run `docker build`, tagging the imag
 		--build-arg ASSET_LOCATION_URL=$(ASSET_LOCATION_URL) \
 		--build-arg RACK_ENV=$(RACK_ENV) \
 		--build-arg OPENSEARCH_AUTH_TOKEN=$(OPENSEARCH_AUTH_TOKEN) \
+		--build-arg BANDIERA_URL=$(BANDIERA_URL) \
 		.
 
 run: # Run the Docker image we have created, mapping the HOST_PORT and CONTAINER_PORT
 	docker run --rm -p $(HOST_PORT):$(CONTAINER_PORT) $(IMAGE)
 
 test: # Build the docker image in development mode, using a test PARLIAMENT_BASE_URL. Then run rake within a Docker container using our image.
-	RACK_ENV=development make build
+	RACK_ENV=development BANDIERA_URL=http://localhost:5000 make build
 	docker run --rm $(IMAGE):latest bundle exec rspec
 
 push: # Push the Docker images we have build to the configured Docker repository (Run in GoCD to push the image to AWS)

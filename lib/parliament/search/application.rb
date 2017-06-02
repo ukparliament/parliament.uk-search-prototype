@@ -3,23 +3,32 @@ require 'sinatra'
 require 'sinatra/namespace'
 require 'sinatra/content_for'
 
-# Pugin components for view
-require 'pugin'
-
 # Require Parliament-Ruby gems
 require 'parliament/open_search'
 
 # Require helper classes
 require 'parliament/search/helpers'
 
+# Manually require bandiera for Pugin to load
+require 'bandiera/client'
+
+# Pugin components for view
+require 'pugin'
+
 # Require translations
 require 'i18n'
 require 'i18n/backend/fallbacks'
 require 'sanitize'
 
+# Require Pugin Features
+require 'pugin/helpers/controller_helpers'
+
 module Parliament
   module Search
     class Application < Sinatra::Base
+      include Pugin::Helpers::ControllerHelpers
+      include Parliament::Search::Helpers::BandieraClient
+
       helpers Sinatra::ContentFor
       helpers Parliament::Search::Helpers::PaginationHelper
 
@@ -45,6 +54,7 @@ module Parliament
 
       before do
         uri = request.path
+        Pugin::Feature::Bandiera.reset
 
         if uri && uri[-8..-1] == '/search/' && env['PATH_INFO'] == '/'
           puts 'Redirecting to remove a trailing slash'
