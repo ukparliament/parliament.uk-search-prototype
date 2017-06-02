@@ -48,7 +48,10 @@ module Parliament
 
         if uri && uri[-8..-1] == '/search/' && env['PATH_INFO'] == '/'
           puts 'Redirecting to remove a trailing slash'
-          redirect uri[0...-1]
+
+          redirect_uri = URI(uri[0...-1])
+          redirect_uri.query = URI.encode_www_form(request.params) if request.params.length
+          redirect redirect_uri
         end
       end
 
