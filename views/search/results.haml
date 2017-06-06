@@ -16,7 +16,7 @@
     .container
       %ol.list--box
         - @results.entries.each do |entry|
-          %li{ style: 'word-wrap: break-word;' }
+          %li
             %h2
               %a{ href: "#{entry.url}" }= entry.title
             %p= entry.url
