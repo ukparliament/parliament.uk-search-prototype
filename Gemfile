@@ -31,6 +31,9 @@ gem 'dotenv'
 # Use sanitize to prevent cross site scripting
 gem 'sanitize'
 
+# Use Airbrake for error monitoring
+gem 'airbrake'
+
 group :development do
   gem 'shotgun'
 end

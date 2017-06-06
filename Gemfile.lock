@@ -8,6 +8,9 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.5.1)
       public_suffix (~> 2.0, >= 2.0.2)
+    airbrake (6.1.1)
+      airbrake-ruby (~> 2.2, >= 2.2.5)
+    airbrake-ruby (2.2.5)
     ast (2.3.0)
     backports (3.8.0)
     bandiera-client (3.0.4)
@@ -171,6 +174,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  airbrake
   bandiera-client
   capybara
   dotenv
