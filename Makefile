@@ -1,4 +1,4 @@
-.PHONY: build run dev test push scan-image rmi deploy-ecs
+.PHONY: build run dev test push scan-image rmi deploy-ecs airbrake
 
 ##
 # Makefile used to build, test and (locally) run the parliament.uk-prototype project.
@@ -21,7 +21,7 @@ AWS_ACCOUNT_ID ?= $(or $(shell aws sts get-caller-identity --output text --query
 GO_PIPELINE_COUNTER ?= unknown
 
 # Which Rack environment will our docker image be configured to run in?
-RACK_ENV ?= production
+RACK_ENV ?= development
 
 # VERSION is used to tag the Docker images
 VERSION = 0.2.$(GO_PIPELINE_COUNTER)
@@ -35,6 +35,15 @@ TENABLEIO_USER ?= user # passed from an envvar in the CDP
 TENABLEIO_PASSWORD ?= password # passed from an envvar in the CDP
 TENABLEIO_REGISTRY = cloud.flawcheck.com
 TENABLEIO_REPO = web1live
+
+# Airbrake.io
+AIRBRAKE_PROJECT_ID ?=
+AIRBRAKE_PROJECT_KEY ?=
+AIRBRAKE_ENVIRONMENT = $(RACK_ENV)
+AIRBRAKE_REPOSITORY = https://github.com/ukparliament/parliament.uk-search-prototype
+GIT_SHA = $(or $(GO_REVISION), unknown)
+GIT_TAG = $(or $(shell git describe --tags --exact-match 2> /dev/null), unknown)
+AWS_ACCOUNT ?= unknown
 
 # The name of our Docker image
 IMAGE = $(AWS_ACCOUNT_ID).dkr.ecr.$(AWS_REGION).amazonaws.com/$(APP_NAME)
@@ -53,6 +62,8 @@ HOST_PORT = 81
 build: # Using the variables defined above, run `docker build`, tagging the image and passing in the required arguments.
 	docker build -t $(IMAGE):$(VERSION) -t $(IMAGE):latest \
 		--build-arg OPENSEARCH_DESCRIPTION_URL=$(OPENSEARCH_DESCRIPTION_URL) \
+		--build-arg AIRBRAKE_PROJECT_KEY=$(AIRBRAKE_PROJECT_KEY) \
+		--build-arg AIRBRAKE_PROJECT_ID=$(AIRBRAKE_PROJECT_ID) \
 		--build-arg GTM_KEY=$(GTM_KEY) \
 		--build-arg ASSET_LOCATION_URL=$(ASSET_LOCATION_URL) \
 		--build-arg RACK_ENV=$(RACK_ENV) \
@@ -84,3 +95,6 @@ rmi: # Remove local versions of our images.
 deploy-ecs: # Deploy our new Docker image onto an AWS cluster (Run in GoCD to deploy to various environments).
 	./aws_ecs/register-task-definition.sh $(APP_NAME)
 	aws ecs update-service --service $(APP_NAME) --cluster $(ECS_CLUSTER) --region $(AWS_REGION) --task-definition $(APP_NAME)
+
+airbrake: # Notify Airbrake that we have made a new deployment
+	curl -X POST -H "Content-Type: application/json" -d "{ \"environment\":\"${AIRBRAKE_ENVIRONMENT}\", \"username\":\"${AWS_ACCOUNT}\", \"repository\":\"${AIRBRAKE_REPOSITORY}\", \"revision\":\"${GIT_SHA}\", \"version\": \"${GIT_TAG}\" }" "https://airbrake.io/api/v4/projects/${AIRBRAKE_PROJECT_ID}/deploys?key=${AIRBRAKE_PROJECT_KEY}"

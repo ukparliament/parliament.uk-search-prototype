@@ -1,5 +1,5 @@
 - content_for :title do
-  Results - Search
+  #{@query_parameter} - Search
 
 .section--primary
   .container
@@ -16,8 +16,9 @@
     .container
       %ol.list--box
         - @results.entries.each do |entry|
-          %li
-            %a{ href: "#{entry.url}" }= entry.title
+          %li{ style: 'word-wrap: break-word;' }
+            %h2
+              %a{ href: "#{entry.url}" }= entry.title
             %p= entry.url
             %p= entry.summary
 

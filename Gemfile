@@ -20,7 +20,7 @@ gem 'parliament-opensearch', '~> 0.2'
 gem 'bandiera-client'
 
 # Use Pugin for front-end components and templates
-gem 'pugin', '~> 0.7.1'
+gem 'pugin', '~> 0.8'
 
 # Use i18n for translations
 gem 'i18n'
@@ -30,6 +30,9 @@ gem 'dotenv'
 
 # Use sanitize to prevent cross site scripting
 gem 'sanitize'
+
+# Use Airbrake for error monitoring
+gem 'airbrake'
 
 group :development do
   gem 'shotgun'
