@@ -56,25 +56,21 @@ module Parliament
             options = settings.view_options.merge(options) if settings.respond_to?(:view_options)
 
             # Find the template file (try many paths and formats)
-            puts 'GET TEMPLATE FROM #SHOW'
             template, format = find_template(templates)
             return nil  if template.nil?
 
             # Save for later
             layout = options.delete :layout
 
-            puts 'RENDERING TEMPLATE FROM #SHOW'
             ret = render(format, template, options, locals)
 
             # The default Sinatra layouting assumes that the layout will be the
             # same format as the actual page. Let's fix it so that the layout
             # can be anything else.
             if layout
-              puts 'GETTING LAYOUT FROM #SHOW'
               layout, layout_format = find_template(layout)
               return ret  if layout.nil?
 
-              puts 'RENDING LAYOUT FROM #SHOW'
               return render(format, layout) { ret }
             end
 
@@ -84,9 +80,6 @@ module Parliament
           # Finds a template file.
           # Returns: a tuple of the template filename and the format.
           def find_template(templates, formats=nil, other=nil)
-            puts "TEMPLATES: #{templates}"
-            puts "FORMATS: #{formats}"
-            puts "OTHER: #{other}"
 
             if other
               formats = nil
@@ -98,13 +91,10 @@ module Parliament
             formats   ||= settings.view_formats
 
             templates.each do |template|
-              puts '---------'
-              puts 'SEARCHING FOR TEMPLATE: '+template
               paths.each do |path|
-                puts '-- SEARCHING WITHIN PATH: '+path
+                puts 'Rendering ' +template + ' within path ' +path
 
                 formats.each do |format|
-                  puts '---- SEARCHING FOR FORMAT: '+format.to_s
                   tpl = template_for(template, format, path) or next
                   return [tpl, format]
                 end
