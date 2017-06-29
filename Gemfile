@@ -42,7 +42,7 @@ group :test do
   gem 'rake'
   gem 'capybara'
   gem 'rspec'
-  gem 'simplecov', require: false
+  gem 'simplecov', '~> 0.14', require: false
   gem 'rack-vcr'
   gem 'webmock'
   gem 'rubocop'
