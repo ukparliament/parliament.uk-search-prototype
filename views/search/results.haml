@@ -16,11 +16,11 @@
     .container
       %ol.list--box
         - @results.entries.each do |entry|
-          %li{ style: 'word-wrap: break-word;' }
-            %h2
-              %a{ href: "#{entry.url}" }= entry.title
-            %p= entry.url
-            %p= entry.summary
+          %li
+            .list--details
+              %h2
+                %a{ href: "#{entry.url}" }= entry.title
+              %p= entry.summary
 
 %section
   .container
