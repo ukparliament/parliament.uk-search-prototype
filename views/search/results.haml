@@ -14,7 +14,7 @@
 - if @results_total.to_i >= 1
   %section#content
     .container
-      %ol.list--box
+      %ol.list--block
         - @results.entries.each do |entry|
           %li
             .list--details
@@ -40,5 +40,5 @@
               - else
                 %span= current_page
     - else
-      .highlight--box.highlight--caution__soft
+      .status--highlight.theme--caution
         %p= 'There are no results for your search.'
