@@ -88,7 +88,7 @@ GEM
       ast (~> 2.2)
     powerpack (0.1.1)
     public_suffix (2.0.5)
-    pugin (0.8.8)
+    pugin (1.0.1.pre)
     puma (3.9.1)
     rack (2.0.3)
     rack-protection (2.0.0)
@@ -182,7 +182,7 @@ DEPENDENCIES
   i18n
   parliament-opensearch (~> 0.2)
   parliament-ruby (~> 0.7)
-  pugin (~> 0.8)
+  pugin (= 1.0.1.pre)
   puma
   rack-vcr
   rake
@@ -196,4 +196,4 @@ DEPENDENCIES
   webmock
 
 BUNDLED WITH
-   1.15.2
+   1.15.3
