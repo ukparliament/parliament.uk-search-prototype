@@ -20,7 +20,7 @@ gem 'parliament-opensearch', '~> 0.2'
 gem 'bandiera-client'
 
 # Use Pugin for front-end components and templates
-gem 'pugin', '~> 0.8'
+gem 'pugin', '1.0.1.pre'
 
 # Use i18n for translations
 gem 'i18n'
